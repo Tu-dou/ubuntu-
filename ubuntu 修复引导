@@ -1,0 +1,30 @@
+在terminal里输入sudo add-apt-repository ppa:yannubuntu/boot-repair && sudo apt-get update
+回车
+4. 再输入 sudo apt-get install -y boot-repair && sudo boot-repair &
+回车
+方法2
+ 从光盘或U盘启动，选择“试用ubuntu”模式，进入之打开终端，先在终端输入sudo fdisk -l （注意是小写的L，不是数字1，此步用于确定电脑中安装 Ubuntu所在分区的位置，输入以后会输出类似如下信息，找到ID为83的那行，记住/dev/sdaX的情况，比如本人的电脑是/dev /sda10。）
+Disk /dev/sda: 500.1 GB, 500107862016 bytes
+255 heads, 63 sectors/track, 60801 cylinders, total 976773168 sectors
+Units = 扇区 of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum www.gzlij.com/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x07f2837e
+ 设备       启动      起点        终点                块数         Id       系统
+/dev/sda1   *        63         104872319    52436128+   7  HPFS/NTFS/exFAT
+/dev/sda2      104872381   976771071   435949345+  f  W95 扩展 (LBA)
+/dev/sda5      104872383   324471688   109799653    7  HPFS/NTFS/exFAT
+/dev/sda6      324472832   542523391   109025280    7  HPFS/NTFS/exFAT
+/dev/sda7      542525440   665403391    61438976     7  HPFS/NTFS/exFAT
+/dev/sda8      665405440   800800976    67697768+  7  HPFS/NTFS/exFAT
+/dev/sda9      972808192   976771071     1981440    82 Linux 交换 / Solaris
+/dev/sda10    800802816   972799999    85998592   83  Linux
+输入sudo -i（此步用于得到root权限，方便以下操作。）
+输入mkdir /media/tempdir（创建一个文件夹tempdir，用于挂载刚才的sda10，此文件夹名称你可以依个人爱好而定，没有太多要求。）
+4
+输入mount /dev/sda10 /media/tempdir（将sda10挂载于tempdir文件夹下。）
+5
+输入grub-install --root-directory=/media/tempdir /dev/sda（本步骤用于来重新安装grub2到硬盘的主引导记录MBR里面。）
+输入以后如果出现“Installation Finished.No Error Reported.”字符，就表示操作成功了。
+sudo update-grub
+
